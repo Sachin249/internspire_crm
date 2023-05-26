@@ -40,11 +40,14 @@ const LeadSchema = new mongoose.Schema({
         required:false
     },
     assign_to:{
-        type:String,
+        type:Array,
+        ref:'users',
+        default: [],
         required:false
     },
     assign_by:{
         type:String,
+        default: "Admin",
         required:false
     },
     enrollment:{
