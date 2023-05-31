@@ -35,8 +35,9 @@ app.use((req, res, next) => {
 app.use('/api/auth', require('./controllers/authcontroller'));
 app.use('/api/admin/lead', require('./controllers/admin/leadcontroller'));
 app.use('/api/admin/employee', require('./controllers/admin/employeecontroller'));
-app.use('/api/user/attendence', require('./controllers/user/attendencecontroller'));
 app.use('/api/admin/task', require('./controllers/admin/taskcontroller'));
+app.use('/api/user/attendence', require('./controllers/user/attendencecontroller'));
+app.use('/api/user/task', require('./controllers/user/taskcontroller'));
 
 // error handler
 app.use(function(err, req, res, next) {
