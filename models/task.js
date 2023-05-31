@@ -7,6 +7,10 @@ const TaskSchema = new mongoose.Schema({
         ref:'users',
         required:false
     },
+    title:{
+        type:String,
+        required:false
+    },
     description:{
         type:String,
         required:false

@@ -20,6 +20,7 @@ router.get('/list',verifyToken, async function(req, res, next){
 
 router.post('/create',  
 body('employeeId').not().isEmpty().withMessage('employeeId Required'), 
+body('title').not().isEmpty().withMessage('title Required'), 
 body('description').not().isEmpty().withMessage('description Required'), 
 body('duedate').not().isEmpty().withMessage('duedate Required'), 
 verifyToken,
@@ -32,6 +33,7 @@ verifyToken,
     const saveData = new tasks({
       employeeId:req.body.employeeId,
       duedate: req.body.duedate,
+      title:req.body.title,
       description:req.body.description,
       leadId:req.body.leadId,
       userId:req.decoded.id
