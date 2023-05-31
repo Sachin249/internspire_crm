@@ -3,15 +3,15 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const saltRounds = 10;
 const { body, validationResult } = require('express-validator');
-var tasks = require('../models/task')
-var leads = require('../models/lead')
-var attendences = require('../models/attendence')
-var verifyToken = require('../middleware/verifytokenuser');
+var tasks = require('../../models/task')
+var leads = require('../../models/lead')
+var attendences = require('../../models/attendence')
+var verifyToken = require('../../middleware/verifytokenuser');
 
 
 router.get('/list',verifyToken, async function(req, res, next){
   try{
-        const data = await tasks.find({employeeId:req.decoded.id}).populate('userId').populate('employeeId').populate('leadId').exec();
+        const data = await tasks.find().populate('userId').populate('employeeId').populate('leadId').exec();
         return res.status(200).json({ success:'Data found', data:data });
   }catch(err){
     return res.status(500).json({ errors: err });

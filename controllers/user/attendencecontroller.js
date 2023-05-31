@@ -3,9 +3,9 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const saltRounds = 10;
 const { body, validationResult } = require('express-validator');
-var users = require('../models/user')
-var attendences = require('../models/attendence')
-var verifyToken = require('../middleware/verifytokenuser');
+var users = require('../../models/user')
+var attendences = require('../../models/attendence')
+var verifyToken = require('../../middleware/verifytokenuser');
 
 
 router.get('/list',verifyToken, async function(req, res, next){
