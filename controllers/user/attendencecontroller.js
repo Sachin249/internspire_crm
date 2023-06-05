@@ -10,7 +10,7 @@ var verifyToken = require('../../middleware/verifytokenuser');
 
 router.get('/list',verifyToken, async function(req, res, next){
   try{
-        const data = await attendences.find().populate('userId').exec();
+        const data = await attendences.find({userId:req.decoded.id}).populate('userId').exec();
         return res.status(200).json({ success:'Data found', data:data });
   }catch(err){
     return res.status(500).json({ errors: err });
@@ -76,6 +76,17 @@ verifyToken,
     return res.status(500).json({ errors: err });
   }
   
+});
+
+router.get('/todayAttendence',verifyToken, async function(req, res, next){
+  try{
+    const d = new Date();
+    let date = d.toLocaleDateString();
+        const data = await attendences.find({userId:req.decoded.id,date:date}).populate('userId').exec();
+        return res.status(200).json({ success:'Data found', data:data });
+  }catch(err){
+    return res.status(500).json({ errors: err });
+  }
 });
 
 module.exports = router;
