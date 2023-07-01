@@ -79,5 +79,68 @@ router.get('/statusUpdate/:id',verifyToken, async function(req, res, next){
 
 });
 
+router.post('/update-task/:id', 
+verifyToken,
+ async function(req, res, next){
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try{
+    const id = req.params.id;
+    const task = await tasks.findById(id)
+
+    if(!task){
+      return res.status(400).json({ errors: "Task Not Found" });
+    }
+    const data = await tasks.findByIdAndUpdate(id,{
+      employeeId:req.body.employeeId,
+      duedate: req.body.duedate,
+      title:req.body.title,
+      description:req.body.description,
+      leadId:req.body.leadId,
+      userId:req.decoded.id
+     });
+     await leads.updateMany(
+      { _id: { $in: req.body.leadId } },
+      {$set: {assign_to: req.body.employeeId},
+      
+    })
+     const newdata = await tasks.findById(id);
+
+     return res.status(200).json({ success:'Task Updated',data:newdata });
+  }
+  catch(err){
+    return res.status(500).json({ errors: err });
+  }
+  
+});
+
+router.get('/show/:id',verifyToken, async function(req, res, next){
+  let dataId= req.params.id;
+  try{
+    const data = await tasks.findOne({'_id':dataId}).populate('employeeId').populate('leadId').exec();
+    return res.status(200).json({ data:data });
+  }catch(err){
+  return res.status(500).json({ errors: err });
+  }
+});
+
+router.get('/remove/:id',verifyToken, async function(req, res, next){
+  let dataId= req.params.id;
+try{
+   const lead = await tasks.findOneAndRemove({'_id':dataId})
+   if(!lead){
+    return res.status(400).json({ errors: "Task not exits or you are not authorized to delete this." });
+   }
+   return res.status(200).json({ success:"Task Deleted" });
+}
+catch(err){
+  return res.status(500).json({ errors: err });
+}
+});
+
+
 
 module.exports = router;

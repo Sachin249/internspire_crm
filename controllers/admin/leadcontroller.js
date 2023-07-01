@@ -91,7 +91,7 @@ verifyToken,
 router.get('/show/:id',verifyToken, async function(req, res, next){
   let dataId= req.params.id;
   try{
-    const data = await leads.findOne({'_id':dataId}).exec();
+    const data = await leads.findOne({'_id':dataId}).populate('assign_to').exec();
     return res.status(200).json({ data:data });
   }catch(err){
   return res.status(500).json({ errors: err });
