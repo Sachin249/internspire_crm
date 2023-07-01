@@ -27,8 +27,8 @@ verifyToken,
   }
   try{
     const d = new Date();
-    let date = d.toLocaleDateString();
-    let clockIn = d.toLocaleTimeString();
+    let date = d.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
+    let clockIn = d.toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" });
     // const isValid = await attendences.findOne({date:date,userId:req.decoded.id})
     // if(isValid !== ''){
     //     return res.status(422).json({ error: 'Something went wrong'});
@@ -56,8 +56,8 @@ verifyToken,
   
   try{
     const d = new Date();
-    let date = d.toLocaleDateString();
-    let clockOut = d.toLocaleTimeString();
+    let date = d.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
+    let clockOut = d.toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" });
     // const isValid = await attendences.find({date:date,userId:req.decoded.id,clockOut:{$ne:''}})
     // if(isValid){
     //     return res.status(422).json({ error: 'Something went wrong'});
@@ -81,7 +81,7 @@ verifyToken,
 router.get('/todayAttendence',verifyToken, async function(req, res, next){
   try{
     const d = new Date();
-    let date = d.toLocaleDateString();
+    let date = d.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" });
         const data = await attendences.find({userId:req.decoded.id,date:date}).populate('userId').exec();
         return res.status(200).json({ success:'Data found', data:data });
   }catch(err){
