@@ -5,7 +5,7 @@
  
  router.use(function (req, res, next) {
         var token = req.headers['x-access-token'];
-        console.log(token)
+        // console.log(token)
         if (token) {
                 jwt.verify(token, global.config.usersecretKey,
                 {
