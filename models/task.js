@@ -3,7 +3,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 
 const TaskSchema = new mongoose.Schema({
     employeeId:{
-        type:String,
+        type:Array,
         ref:'users',
         required:false
     },
